@@ -128,11 +128,10 @@ p { line-height: 1.75; }
 .astep h3 { font-family: var(--serif); font-size: 1.2rem; font-weight: 700; color: var(--dark); margin-bottom: .625rem; }
 .astep p { font-size: .9rem; color: var(--mid); line-height: 1.72; }
 /* Dark strip */
-.adoracion-strip { background: var(--dark-2); display: grid; grid-template-columns: 1fr 1.3fr; }
-.adoracion-strip-imgs { overflow: hidden; min-height: 400px; }
-.adoracion-strip-imgs img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; opacity: .8; }
-.adoracion-strip-text { display: flex; flex-direction: column; justify-content: center; padding: 4rem 3.5rem 4rem 3rem; border-left: 1px solid rgba(255,255,255,.08); }
-.adoracion-strip-text blockquote { font-family: var(--serif); font-size: clamp(1.25rem, 2.5vw, 1.6rem); font-style: italic; color: var(--white); line-height: 1.6; margin-bottom: 1.25rem; }
+.adoracion-strip { position: relative; min-height: 480px; overflow: hidden; display: flex; align-items: center; background: var(--dark); }
+.adoracion-strip-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: .4; }
+.adoracion-strip-text { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; padding: 4rem clamp(1.5rem, 5vw, 4rem); max-width: 780px; }
+.adoracion-strip-text blockquote { font-family: var(--serif); font-size: clamp(1.3rem, 2.5vw, 1.75rem); font-style: italic; color: var(--white); line-height: 1.6; margin-bottom: 1.25rem; }
 .adoracion-strip-text cite { font-size: .75rem; color: var(--teal-light); letter-spacing: .12em; text-transform: uppercase; }
 
 /* ── CARLO ACUTIS ── */
@@ -146,7 +145,9 @@ p { line-height: 1.75; }
 
 /* ── FECHAS ── */
 .section-fechas { padding: clamp(5rem, 10vw, 9rem) 0; background: var(--teal-pale); }
-.fechas-subtitle { color: var(--mid); font-size: 1.05rem; margin-top: -.75rem; margin-bottom: 3rem; }
+.fechas-subtitle { color: var(--mid); font-size: 1.05rem; margin-top: -.75rem; margin-bottom: 1rem; }
+.fechas-maps-link { display: inline-block; font-size: .82rem; font-weight: 600; color: var(--teal); letter-spacing: .04em; margin-bottom: 2.5rem; text-decoration: underline; text-underline-offset: 3px; }
+.fechas-maps-link:hover { color: var(--teal-mid); }
 .fechas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
 .fecha-card { background: var(--white); border: 1px solid rgba(13,148,136,.2); padding: 1.5rem 1.75rem; position: relative; overflow: hidden; transition: box-shadow .2s; }
 .fecha-card:hover { box-shadow: 0 4px 20px rgba(13,148,136,.12); }
@@ -308,9 +309,8 @@ p { line-height: 1.75; }
   .nosotros-photo img { height: 320px; }
   .eucaristia-grid { grid-template-columns: 1fr; }
   .adoracion-steps { grid-template-columns: repeat(2, 1fr); }
-  .adoracion-strip { grid-template-columns: 1fr; }
-  .adoracion-strip-imgs { min-height: 300px; max-height: 380px; }
-  .adoracion-strip-text { border-left: none; border-top: 1px solid rgba(255,255,255,.08); padding: 2.5rem; }
+  .adoracion-strip { min-height: 380px; }
+  .adoracion-strip-text { padding: 2.5rem; }
 }
 
 /* ── MOBILE (480px) ── */
@@ -363,7 +363,7 @@ p { line-height: 1.75; }
   .astep-num { font-size: 2.25rem; margin-bottom: .4rem; }
   .astep h3 { font-size: 1.05rem; margin-bottom: .4rem; }
   .astep p { font-size: .875rem; }
-  .adoracion-strip-imgs { min-height: 220px; max-height: 260px; }
+  .adoracion-strip { min-height: 300px; }
   .adoracion-strip-text { padding: 2rem 1.5rem; }
   .adoracion-strip-text blockquote { font-size: 1.05rem; }
 
