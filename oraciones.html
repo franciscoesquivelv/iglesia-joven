@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oraciones — Iglesia Joven</title>
+  <meta name="description" content="Oraciones y reflexiones para distintas situaciones de la vida, compartidas por Iglesia Joven.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ── NAVIGATION ── -->
+  <nav class="nav" id="nav" role="navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Iglesia Joven — Inicio">
+        <img src="Logos/Logotipo-White.png" alt="Iglesia Joven" class="logo-white">
+        <img src="Logos/Logotipo-Black.png" alt="Iglesia Joven" class="logo-black">
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="index.html#adoracion">Adoración</a></li>
+        <li><a href="index.html#fechas">Fechas</a></li>
+        <li><a href="canciones.html">Canciones</a></li>
+        <li><a href="oraciones.html" aria-current="page">Oraciones</a></li>
+      </ul>
+      <button class="nav-menu-btn" id="menuBtn" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <ul role="list">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="index.html#adoracion">Adoración</a></li>
+      <li><a href="index.html#fechas">Fechas</a></li>
+      <li><a href="canciones.html">Canciones</a></li>
+      <li><a href="oraciones.html">Oraciones</a></li>
+    </ul>
+  </div>
+
+  <!-- ── PAGE HERO ── -->
+  <header class="page-hero">
+    <div class="container">
+      <span class="eyebrow">Para todos los momentos</span>
+      <h1 class="page-title">Oraciones<br><em>y reflexiones</em></h1>
+      <p class="page-subtitle">
+        Palabras para elevar el corazón a Dios en distintas situaciones de la vida.
+        Filtra por categoría o léelas todas.
+      </p>
+    </div>
+  </header>
+
+  <!-- ── PRAYERS ── -->
+  <main class="prayers-section">
+    <div class="container">
+      <div class="filters-bar" id="filtersBar" role="group" aria-label="Filtrar por situación">
+        <!-- Generado por JS -->
+      </div>
+      <p class="results-count" id="prayersCount" aria-live="polite">Cargando…</p>
+      <div class="prayers-list" id="prayersList" aria-live="polite">
+        <!-- Generado por JS -->
+      </div>
+    </div>
+  </main>
+
+  <!-- ── PRAYER MODAL ── -->
+  <div class="modal-overlay" id="prayerModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <button class="modal-close" id="modalClose" aria-label="Cerrar">✕</button>
+        <div class="modal-situation" id="modalSituation"></div>
+        <div class="modal-title" id="modalTitle"></div>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">
+        <img src="Logos/Logo-white.png" alt="Iglesia Joven">
+        <p>Una, Santa, Católica y Apostólica.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Páginas</h4>
+        <ul role="list">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="canciones.html">Canciones</a></li>
+          <li><a href="index.html#fechas">Próximas fechas</a></li>
+        </ul>
+      </div>
+      <div class="footer-quote">
+        <p>"Oren sin cesar, den gracias en toda situación."</p>
+        <cite>— 1 Tesalonicenses 5:17-18</cite>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© 2026 Iglesia Joven</p>
+        <a href="admin.html">Panel de administración</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/oraciones.js"></script>
+</body>
+</html>

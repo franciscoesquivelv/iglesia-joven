@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración — Iglesia Joven</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="admin-page">
+
+  <!-- ── NAVIGATION ── -->
+  <nav class="nav" id="nav" role="navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Iglesia Joven — Inicio">
+        <img src="Logos/Logotipo-White.png" alt="Iglesia Joven" class="logo-white">
+        <img src="Logos/Logotipo-Black.png" alt="Iglesia Joven" class="logo-black">
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">← Volver al sitio</a></li>
+        <li><a href="canciones.html">Canciones</a></li>
+        <li><a href="oraciones.html">Oraciones</a></li>
+      </ul>
+      <button class="nav-menu-btn" id="menuBtn" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <ul role="list">
+      <li><a href="index.html">← Volver al sitio</a></li>
+      <li><a href="canciones.html">Ver Canciones</a></li>
+      <li><a href="oraciones.html">Ver Oraciones</a></li>
+    </ul>
+  </div>
+
+  <!-- ── ADMIN HEADER ── -->
+  <div class="admin-topbar">
+    <div class="container">
+      <div>
+        <h1>Panel de Administración</h1>
+        <p>Gestiona el contenido del sitio de Iglesia Joven</p>
+      </div>
+      <div class="admin-io">
+        <button class="btn-io" id="exportBtn" title="Exportar todos los datos como JSON">↑ Exportar datos</button>
+        <button class="btn-io" id="importBtn" title="Importar datos desde un archivo JSON">↓ Importar datos</button>
+        <input type="file" id="importInput" accept=".json" style="display:none">
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TABS ── -->
+  <div class="admin-tabs" role="tablist">
+    <button class="admin-tab active" data-panel="panelCanciones" role="tab" aria-selected="true">
+      Canciones
+    </button>
+    <button class="admin-tab" data-panel="panelOraciones" role="tab" aria-selected="false">
+      Oraciones
+    </button>
+    <button class="admin-tab" data-panel="panelEventos" role="tab" aria-selected="false">
+      Actividades Especiales
+    </button>
+  </div>
+
+  <!-- ── CONTENT ── -->
+  <div class="admin-content">
+    <div class="container">
+
+      <!-- ════ PANEL: CANCIONES ════ -->
+      <div class="admin-panel active" id="panelCanciones" role="tabpanel">
+        <div class="admin-split">
+
+          <!-- Form -->
+          <div class="admin-form-box">
+            <h3 id="songFormTitle">Agregar Canción</h3>
+            <form id="songForm" novalidate>
+              <div class="form-field">
+                <label for="songTitle">Título *</label>
+                <input type="text" id="songTitle" placeholder="Ej: Infinito Eres Tú" required>
+              </div>
+              <div class="form-field">
+                <label for="songArtist">Artista</label>
+                <input type="text" id="songArtist" placeholder="Ej: Elevation Worship">
+              </div>
+              <div class="form-field">
+                <label for="songLyrics">Letra *</label>
+                <textarea id="songLyrics" placeholder="Pega aquí la letra completa..." rows="12" required></textarea>
+                <p class="form-hint">Usa saltos de línea para separar versos y estrofas.</p>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Guardar canción</button>
+                <button type="button" class="btn btn-cancel" id="songCancelBtn" style="display:none">Cancelar</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- List -->
+          <div class="admin-list-box">
+            <h3>Canciones guardadas</h3>
+            <div class="admin-items" id="songsList">
+              <!-- Generado por JS -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ════ PANEL: ORACIONES ════ -->
+      <div class="admin-panel" id="panelOraciones" role="tabpanel">
+        <div class="admin-split">
+
+          <!-- Form -->
+          <div class="admin-form-box">
+            <h3 id="prayerFormTitle">Agregar Oración</h3>
+            <form id="prayerForm" novalidate>
+              <div class="form-field">
+                <label for="prayerTitle">Título *</label>
+                <input type="text" id="prayerTitle" placeholder="Ej: Oración en momentos de ansiedad" required>
+              </div>
+              <div class="form-field">
+                <label for="prayerSituation">Situación / Categoría</label>
+                <input type="text" id="prayerSituation" placeholder="Ej: Ansiedad, Gratitud, Sanación…">
+                <p class="form-hint">Se usará para filtrar en la página de oraciones.</p>
+              </div>
+              <div class="form-field">
+                <label for="prayerContent">Oración o reflexión *</label>
+                <textarea id="prayerContent" placeholder="Escribe o pega la oración aquí..." rows="12" required></textarea>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Guardar oración</button>
+                <button type="button" class="btn btn-cancel" id="prayerCancelBtn" style="display:none">Cancelar</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- List -->
+          <div class="admin-list-box">
+            <h3>Oraciones guardadas</h3>
+            <div class="admin-items" id="prayersList">
+              <!-- Generado por JS -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ════ PANEL: ACTIVIDADES ════ -->
+      <div class="admin-panel" id="panelEventos" role="tabpanel">
+        <div class="admin-split">
+
+          <!-- Form -->
+          <div class="admin-form-box">
+            <h3 id="eventFormTitle">Agregar Actividad Especial</h3>
+            <p class="form-hint" style="margin-bottom:1.25rem; font-size:.85rem; color:var(--mid);">
+              Los segundos jueves del mes se calculan automáticamente.
+              Usa esto para retiros, misas especiales, u otras actividades.
+            </p>
+            <form id="eventForm" novalidate>
+              <div class="form-field">
+                <label for="eventTitle">Nombre del evento *</label>
+                <input type="text" id="eventTitle" placeholder="Ej: Retiro de Adviento" required>
+              </div>
+              <div class="form-field">
+                <label for="eventDate">Fecha *</label>
+                <input type="date" id="eventDate" required>
+              </div>
+              <div class="form-field">
+                <label for="eventTime">Hora</label>
+                <input type="time" id="eventTime">
+              </div>
+              <div class="form-field">
+                <label for="eventDescription">Descripción / Lugar</label>
+                <textarea id="eventDescription" placeholder="Ej: Parroquia San Rafael Arcángel · Escazú" rows="4"></textarea>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Guardar actividad</button>
+                <button type="button" class="btn btn-cancel" id="eventCancelBtn" style="display:none">Cancelar</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- List -->
+          <div class="admin-list-box">
+            <h3>Actividades especiales</h3>
+            <div class="admin-items" id="eventsList">
+              <!-- Generado por JS -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast" role="alert" aria-live="assertive"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
