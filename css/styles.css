@@ -218,14 +218,14 @@ p { line-height: 1.75; }
 /* Song modal */
 .modal-overlay { position: fixed; inset: 0; background: rgba(28,25,23,.75); z-index: 200; display: flex; align-items: flex-start; justify-content: center; padding: calc(var(--nav-height) + 1.5rem) 1.5rem 1.5rem; opacity: 0; pointer-events: none; transition: opacity .3s; overflow-y: auto; }
 .modal-overlay.open { opacity: 1; pointer-events: all; }
-.modal { background: var(--white); width: 100%; max-width: 680px; position: relative; }
-.modal-header { padding: 2rem 2rem 1.5rem; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--white); z-index: 1; }
+.modal { background: var(--white); width: 100%; max-width: 680px; position: relative; display: flex; flex-direction: column; max-height: calc(100vh - var(--nav-height) - 3rem); }
+.modal-header { padding: 2rem 2rem 1.5rem; border-bottom: 1px solid var(--border); flex-shrink: 0; background: var(--white); }
 .modal-title { font-family: var(--serif); font-size: 1.85rem; font-weight: 700; color: var(--dark); margin-bottom: .25rem; line-height: 1.25; padding-right: 2.5rem; }
 .modal-artist { color: var(--teal); font-weight: 600; font-size: .9rem; letter-spacing: .04em; }
 .modal-situation { color: var(--teal); font-weight: 600; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; margin-bottom: .25rem; }
 .modal-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; cursor: pointer; font-size: 1.4rem; color: var(--light); line-height: 1; padding: .25rem; transition: color .2s; }
 .modal-close:hover { color: var(--dark); }
-.modal-body { padding: 2rem; white-space: pre-wrap; font-size: 1rem; line-height: 2.1; color: var(--mid); }
+.modal-body { padding: 2rem; white-space: pre-wrap; font-size: 1rem; line-height: 2.1; color: var(--mid); overflow-y: auto; flex: 1; }
 
 /* ── PRAYERS ── */
 .prayers-section { padding: 4rem 0; }
@@ -374,6 +374,7 @@ p { line-height: 1.75; }
 
   /* Modals */
   .modal-overlay { padding: calc(var(--nav-height) + .5rem) .5rem .5rem; }
+  .modal { max-height: calc(100vh - var(--nav-height) - 1rem); }
   .modal-header { padding: 1.25rem 1rem 1rem; }
   .modal-title { font-size: 1.4rem; padding-right: 2rem; }
   .modal-body { padding: 1.25rem 1rem; font-size: .95rem; line-height: 1.9; }
