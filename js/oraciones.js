@@ -102,6 +102,8 @@ document.getElementById('prayerModal').addEventListener('click', function(e) {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 /* ── Init ── */
-allPrayers = DB.getPrayers().sort((a, b) => a.title.localeCompare(b.title, 'es'));
-renderFilters(allPrayers);
-renderPrayers(allPrayers);
+(async () => {
+  allPrayers = (await DB.getPrayers()).sort((a, b) => a.title.localeCompare(b.title, 'es'));
+  renderFilters(allPrayers);
+  renderPrayers(allPrayers);
+})();

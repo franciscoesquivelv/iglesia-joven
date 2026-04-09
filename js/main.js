@@ -65,7 +65,7 @@ function today0() {
 }
 
 /* ── Render dates grid ── */
-function renderFechas() {
+async function renderFechas() {
   const grid = document.getElementById('fechasGrid');
   const specialEl = document.getElementById('specialEvents');
   if (!grid) return;
@@ -90,7 +90,7 @@ function renderFechas() {
   }).join('');
 
   /* Special events from admin */
-  const events = DB.getEvents()
+  const events = (await DB.getEvents())
     .filter(e => new Date(e.date + 'T00:00:00') >= now)
     .sort((a, b) => a.date.localeCompare(b.date));
 

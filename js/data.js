@@ -1,79 +1,104 @@
-/* === IGLESIA JOVEN · DATA LAYER (localStorage) === */
+/* === IGLESIA JOVEN · DATA LAYER (Firebase Firestore) === */
 
-const DB = (() => {
-  const KEYS = { songs: 'ij_songs', prayers: 'ij_prayers', events: 'ij_events' };
+const firebaseConfig = {
+  apiKey: "AIzaSyAf3aW5fmUyC6XAuvlcJiipiQCjLfehqO4",
+  authDomain: "iglesiajoven-23672.firebaseapp.com",
+  projectId: "iglesiajoven-23672",
+  storageBucket: "iglesiajoven-23672.firebasestorage.app",
+  messagingSenderId: "144881135379",
+  appId: "1:144881135379:web:a96c1cb8a7a8d2111134e6"
+};
 
-  const get = (key) => {
-    try { return JSON.parse(localStorage.getItem(KEYS[key]) || '[]'); }
-    catch { return []; }
-  };
-  const save = (key, data) => localStorage.setItem(KEYS[key], JSON.stringify(data));
-  const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+firebase.initializeApp(firebaseConfig);
+const _db = firebase.firestore();
 
-  return {
-    /* ── SONGS ── */
-    getSongs: () => get('songs'),
-    addSong(data) {
-      const items = get('songs');
-      const item = { id: uid(), ...data, createdAt: Date.now() };
-      items.push(item);
-      save('songs', items);
-      return item;
-    },
-    updateSong(id, data) {
-      const items = get('songs');
-      const idx = items.findIndex(x => x.id === id);
-      if (idx !== -1) { items[idx] = { ...items[idx], ...data }; save('songs', items); }
-    },
-    deleteSong(id) { save('songs', get('songs').filter(x => x.id !== id)); },
+const DB = {
 
-    /* ── PRAYERS ── */
-    getPrayers: () => get('prayers'),
-    addPrayer(data) {
-      const items = get('prayers');
-      const item = { id: uid(), ...data, createdAt: Date.now() };
-      items.push(item);
-      save('prayers', items);
-      return item;
-    },
-    updatePrayer(id, data) {
-      const items = get('prayers');
-      const idx = items.findIndex(x => x.id === id);
-      if (idx !== -1) { items[idx] = { ...items[idx], ...data }; save('prayers', items); }
-    },
-    deletePrayer(id) { save('prayers', get('prayers').filter(x => x.id !== id)); },
+  /* ── SONGS ── */
+  async getSongs() {
+    const snap = await _db.collection('songs').get();
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  },
+  async addSong(data) {
+    const ref = await _db.collection('songs').add({ ...data, createdAt: Date.now() });
+    return { id: ref.id, ...data };
+  },
+  async updateSong(id, data) {
+    await _db.collection('songs').doc(id).update(data);
+  },
+  async deleteSong(id) {
+    await _db.collection('songs').doc(id).delete();
+  },
 
-    /* ── SPECIAL EVENTS ── */
-    getEvents: () => get('events'),
-    addEvent(data) {
-      const items = get('events');
-      const item = { id: uid(), ...data, createdAt: Date.now() };
-      items.push(item);
-      save('events', items);
-      return item;
-    },
-    updateEvent(id, data) {
-      const items = get('events');
-      const idx = items.findIndex(x => x.id === id);
-      if (idx !== -1) { items[idx] = { ...items[idx], ...data }; save('events', items); }
-    },
-    deleteEvent(id) { save('events', get('events').filter(x => x.id !== id)); },
+  /* ── PRAYERS ── */
+  async getPrayers() {
+    const snap = await _db.collection('prayers').get();
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  },
+  async addPrayer(data) {
+    const ref = await _db.collection('prayers').add({ ...data, createdAt: Date.now() });
+    return { id: ref.id, ...data };
+  },
+  async updatePrayer(id, data) {
+    await _db.collection('prayers').doc(id).update(data);
+  },
+  async deletePrayer(id) {
+    await _db.collection('prayers').doc(id).delete();
+  },
 
-    /* ── EXPORT / IMPORT ── */
-    export() {
-      return JSON.stringify(
-        { songs: get('songs'), prayers: get('prayers'), events: get('events') },
-        null, 2
-      );
-    },
-    import(json) {
-      try {
-        const data = JSON.parse(json);
-        if (Array.isArray(data.songs))   save('songs',   data.songs);
-        if (Array.isArray(data.prayers)) save('prayers', data.prayers);
-        if (Array.isArray(data.events))  save('events',  data.events);
-        return true;
-      } catch { return false; }
+  /* ── EVENTS ── */
+  async getEvents() {
+    const snap = await _db.collection('events').get();
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  },
+  async addEvent(data) {
+    const ref = await _db.collection('events').add({ ...data, createdAt: Date.now() });
+    return { id: ref.id, ...data };
+  },
+  async updateEvent(id, data) {
+    await _db.collection('events').doc(id).update(data);
+  },
+  async deleteEvent(id) {
+    await _db.collection('events').doc(id).delete();
+  },
+
+  /* ── EXPORT / IMPORT ── */
+  async export() {
+    const [songs, prayers, events] = await Promise.all([
+      this.getSongs(), this.getPrayers(), this.getEvents()
+    ]);
+    return JSON.stringify({ songs, prayers, events }, null, 2);
+  },
+  async import(json) {
+    try {
+      const data = JSON.parse(json);
+      const batch = _db.batch();
+      if (Array.isArray(data.songs)) {
+        data.songs.forEach(s => {
+          const { id, ...rest } = s;
+          const ref = id ? _db.collection('songs').doc(id) : _db.collection('songs').doc();
+          batch.set(ref, rest);
+        });
+      }
+      if (Array.isArray(data.prayers)) {
+        data.prayers.forEach(p => {
+          const { id, ...rest } = p;
+          const ref = id ? _db.collection('prayers').doc(id) : _db.collection('prayers').doc();
+          batch.set(ref, rest);
+        });
+      }
+      if (Array.isArray(data.events)) {
+        data.events.forEach(e => {
+          const { id, ...rest } = e;
+          const ref = id ? _db.collection('events').doc(id) : _db.collection('events').doc();
+          batch.set(ref, rest);
+        });
+      }
+      await batch.commit();
+      return true;
+    } catch (err) {
+      console.error('Import error:', err);
+      return false;
     }
-  };
-})();
+  }
+};

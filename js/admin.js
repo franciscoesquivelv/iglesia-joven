@@ -32,17 +32,18 @@ function esc(str) {
    SONGS
 ════════════════════════════════ */
 let editingSongId = null;
+let cachedSongs = [];
 
-function renderSongsList() {
-  const songs = DB.getSongs().sort((a, b) => a.title.localeCompare(b.title, 'es'));
+async function renderSongsList() {
+  cachedSongs = (await DB.getSongs()).sort((a, b) => a.title.localeCompare(b.title, 'es'));
   const el = document.getElementById('songsList');
-  el.innerHTML = songs.length === 0
+  el.innerHTML = cachedSongs.length === 0
     ? '<div class="admin-empty">No hay canciones todavía. Agrega la primera.</div>'
-    : songs.map(s => `
+    : cachedSongs.map(s => `
       <div class="admin-item">
         <div class="admin-item-info">
           <div class="admin-item-title">${esc(s.title)}</div>
-          <div class="admin-item-sub">${esc(s.artist)}</div>
+          <div class="admin-item-sub">${esc(s.artist || '')}</div>
         </div>
         <div class="admin-item-actions">
           <button class="btn-sm btn-sm-edit" onclick="editSong('${s.id}')">Editar</button>
@@ -52,11 +53,11 @@ function renderSongsList() {
 }
 
 function editSong(id) {
-  const song = DB.getSongs().find(s => s.id === id);
+  const song = cachedSongs.find(s => s.id === id);
   if (!song) return;
   editingSongId = id;
   document.getElementById('songTitle').value  = song.title;
-  document.getElementById('songArtist').value = song.artist;
+  document.getElementById('songArtist').value = song.artist || '';
   document.getElementById('songLyrics').value = song.lyrics;
   document.getElementById('songFormTitle').textContent = 'Editar Canción';
   document.getElementById('songCancelBtn').style.display = 'flex';
@@ -64,10 +65,10 @@ function editSong(id) {
   document.getElementById('songTitle').focus();
 }
 
-function deleteSong(id) {
+async function deleteSong(id) {
   if (!confirm('¿Eliminar esta canción? Esta acción no se puede deshacer.')) return;
-  DB.deleteSong(id);
-  renderSongsList();
+  await DB.deleteSong(id);
+  await renderSongsList();
   toast('Canción eliminada');
 }
 
@@ -78,7 +79,7 @@ function resetSongForm() {
   document.getElementById('songCancelBtn').style.display = 'none';
 }
 
-document.getElementById('songForm').addEventListener('submit', function(e) {
+document.getElementById('songForm').addEventListener('submit', async function(e) {
   e.preventDefault();
   const data = {
     title:  document.getElementById('songTitle').value.trim(),
@@ -88,14 +89,14 @@ document.getElementById('songForm').addEventListener('submit', function(e) {
   if (!data.title || !data.lyrics) { toast('El título y la letra son requeridos.', true); return; }
 
   if (editingSongId) {
-    DB.updateSong(editingSongId, data);
+    await DB.updateSong(editingSongId, data);
     toast('Canción actualizada');
   } else {
-    DB.addSong(data);
+    await DB.addSong(data);
     toast('Canción agregada');
   }
   resetSongForm();
-  renderSongsList();
+  await renderSongsList();
 });
 
 document.getElementById('songCancelBtn').addEventListener('click', resetSongForm);
@@ -104,13 +105,14 @@ document.getElementById('songCancelBtn').addEventListener('click', resetSongForm
    PRAYERS
 ════════════════════════════════ */
 let editingPrayerId = null;
+let cachedPrayers = [];
 
-function renderPrayersList() {
-  const prayers = DB.getPrayers().sort((a, b) => a.title.localeCompare(b.title, 'es'));
+async function renderPrayersList() {
+  cachedPrayers = (await DB.getPrayers()).sort((a, b) => a.title.localeCompare(b.title, 'es'));
   const el = document.getElementById('prayersList');
-  el.innerHTML = prayers.length === 0
+  el.innerHTML = cachedPrayers.length === 0
     ? '<div class="admin-empty">No hay oraciones todavía. Agrega la primera.</div>'
-    : prayers.map(p => `
+    : cachedPrayers.map(p => `
       <div class="admin-item">
         <div class="admin-item-info">
           <div class="admin-item-title">${esc(p.title)}</div>
@@ -124,7 +126,7 @@ function renderPrayersList() {
 }
 
 function editPrayer(id) {
-  const p = DB.getPrayers().find(x => x.id === id);
+  const p = cachedPrayers.find(x => x.id === id);
   if (!p) return;
   editingPrayerId = id;
   document.getElementById('prayerTitle').value     = p.title;
@@ -136,10 +138,10 @@ function editPrayer(id) {
   document.getElementById('prayerTitle').focus();
 }
 
-function deletePrayer(id) {
+async function deletePrayer(id) {
   if (!confirm('¿Eliminar esta oración? Esta acción no se puede deshacer.')) return;
-  DB.deletePrayer(id);
-  renderPrayersList();
+  await DB.deletePrayer(id);
+  await renderPrayersList();
   toast('Oración eliminada');
 }
 
@@ -150,7 +152,7 @@ function resetPrayerForm() {
   document.getElementById('prayerCancelBtn').style.display = 'none';
 }
 
-document.getElementById('prayerForm').addEventListener('submit', function(e) {
+document.getElementById('prayerForm').addEventListener('submit', async function(e) {
   e.preventDefault();
   const data = {
     title:     document.getElementById('prayerTitle').value.trim(),
@@ -160,14 +162,14 @@ document.getElementById('prayerForm').addEventListener('submit', function(e) {
   if (!data.title || !data.content) { toast('El título y el contenido son requeridos.', true); return; }
 
   if (editingPrayerId) {
-    DB.updatePrayer(editingPrayerId, data);
+    await DB.updatePrayer(editingPrayerId, data);
     toast('Oración actualizada');
   } else {
-    DB.addPrayer(data);
+    await DB.addPrayer(data);
     toast('Oración agregada');
   }
   resetPrayerForm();
-  renderPrayersList();
+  await renderPrayersList();
 });
 
 document.getElementById('prayerCancelBtn').addEventListener('click', resetPrayerForm);
@@ -176,13 +178,14 @@ document.getElementById('prayerCancelBtn').addEventListener('click', resetPrayer
    EVENTS
 ════════════════════════════════ */
 let editingEventId = null;
+let cachedEvents = [];
 
-function renderEventsList() {
-  const events = DB.getEvents().sort((a, b) => a.date.localeCompare(b.date));
+async function renderEventsList() {
+  cachedEvents = (await DB.getEvents()).sort((a, b) => a.date.localeCompare(b.date));
   const el = document.getElementById('eventsList');
-  el.innerHTML = events.length === 0
+  el.innerHTML = cachedEvents.length === 0
     ? '<div class="admin-empty">No hay actividades especiales todavía.</div>'
-    : events.map(ev => `
+    : cachedEvents.map(ev => `
       <div class="admin-item">
         <div class="admin-item-info">
           <div class="admin-item-title">${esc(ev.title)}</div>
@@ -196,23 +199,23 @@ function renderEventsList() {
 }
 
 function editEvent(id) {
-  const ev = DB.getEvents().find(x => x.id === id);
+  const ev = cachedEvents.find(x => x.id === id);
   if (!ev) return;
   editingEventId = id;
-  document.getElementById('eventTitle').value       = ev.title;
-  document.getElementById('eventDate').value        = ev.date;
-  document.getElementById('eventTime').value        = ev.time || '';
-  document.getElementById('eventDescription').value = ev.description || '';
+  document.getElementById('eventTitle').value        = ev.title;
+  document.getElementById('eventDate').value         = ev.date;
+  document.getElementById('eventTime').value         = ev.time || '';
+  document.getElementById('eventDescription').value  = ev.description || '';
   document.getElementById('eventFormTitle').textContent = 'Editar Actividad';
   document.getElementById('eventCancelBtn').style.display = 'flex';
   document.getElementById('eventTitle').scrollIntoView({ behavior: 'smooth', block: 'center' });
   document.getElementById('eventTitle').focus();
 }
 
-function deleteEvent(id) {
+async function deleteEvent(id) {
   if (!confirm('¿Eliminar esta actividad? Esta acción no se puede deshacer.')) return;
-  DB.deleteEvent(id);
-  renderEventsList();
+  await DB.deleteEvent(id);
+  await renderEventsList();
   toast('Actividad eliminada');
 }
 
@@ -223,7 +226,7 @@ function resetEventForm() {
   document.getElementById('eventCancelBtn').style.display = 'none';
 }
 
-document.getElementById('eventForm').addEventListener('submit', function(e) {
+document.getElementById('eventForm').addEventListener('submit', async function(e) {
   e.preventDefault();
   const data = {
     title:       document.getElementById('eventTitle').value.trim(),
@@ -234,14 +237,14 @@ document.getElementById('eventForm').addEventListener('submit', function(e) {
   if (!data.title || !data.date) { toast('El nombre y la fecha son requeridos.', true); return; }
 
   if (editingEventId) {
-    DB.updateEvent(editingEventId, data);
+    await DB.updateEvent(editingEventId, data);
     toast('Actividad actualizada');
   } else {
-    DB.addEvent(data);
+    await DB.addEvent(data);
     toast('Actividad agregada');
   }
   resetEventForm();
-  renderEventsList();
+  await renderEventsList();
 });
 
 document.getElementById('eventCancelBtn').addEventListener('click', resetEventForm);
@@ -249,8 +252,8 @@ document.getElementById('eventCancelBtn').addEventListener('click', resetEventFo
 /* ════════════════════════════════
    EXPORT / IMPORT
 ════════════════════════════════ */
-document.getElementById('exportBtn').addEventListener('click', () => {
-  const json = DB.export();
+document.getElementById('exportBtn').addEventListener('click', async () => {
+  const json = await DB.export();
   const blob = new Blob([json], { type: 'application/json' });
   const url  = URL.createObjectURL(blob);
   const a    = Object.assign(document.createElement('a'), { href: url, download: 'iglesia-joven-data.json' });
@@ -267,12 +270,12 @@ document.getElementById('importInput').addEventListener('change', function() {
   const file = this.files[0];
   if (!file) return;
   const reader = new FileReader();
-  reader.onload = (e) => {
-    const ok = DB.import(e.target.result);
+  reader.onload = async (e) => {
+    const ok = await DB.import(e.target.result);
     if (ok) {
-      renderSongsList();
-      renderPrayersList();
-      renderEventsList();
+      await renderSongsList();
+      await renderPrayersList();
+      await renderEventsList();
       toast('Datos importados correctamente');
     } else {
       toast('Error: el archivo no es válido.', true);

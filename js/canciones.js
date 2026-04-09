@@ -96,5 +96,7 @@ document.getElementById('searchInput').addEventListener('keydown', e => {
 });
 
 /* ── Init ── */
-allSongs = DB.getSongs().sort((a, b) => a.title.localeCompare(b.title, 'es'));
-renderSongs(allSongs);
+(async () => {
+  allSongs = (await DB.getSongs()).sort((a, b) => a.title.localeCompare(b.title, 'es'));
+  renderSongs(allSongs);
+})();
