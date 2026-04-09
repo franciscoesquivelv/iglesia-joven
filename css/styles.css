@@ -120,13 +120,10 @@ p { line-height: 1.75; }
 .section-adoracion { padding: clamp(5rem, 10vw, 9rem) 0 0; }
 .adoracion-intro { max-width: 640px; margin-bottom: 3.5rem; }
 .adoracion-intro-text { color: var(--mid); font-size: 1.1rem; margin-top: -.5rem; }
-.adoracion-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-bottom: clamp(4rem, 8vw, 6rem); }
-.astep { padding: 1.75rem 0; border-top: 3px solid var(--border); }
-.astep:nth-child(2) { border-top-color: var(--teal); }
-.astep:nth-child(4) { border-top-color: var(--orange); }
-.astep-num { font-family: var(--serif); font-size: 3.5rem; font-weight: 900; color: var(--border); line-height: 1; margin-bottom: .875rem; }
-.astep h3 { font-family: var(--serif); font-size: 1.2rem; font-weight: 700; color: var(--dark); margin-bottom: .625rem; }
-.astep p { font-size: .9rem; color: var(--mid); line-height: 1.72; }
+.adoracion-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; margin-bottom: clamp(4rem, 8vw, 6rem); }
+.aoption { padding: 1.75rem 1.75rem 1.75rem 1.75rem; border-left: 3px solid var(--teal); background: rgba(13,148,136,.04); }
+.aoption-last { border-left-color: var(--orange); }
+.aoption p { font-size: 1rem; color: var(--mid); line-height: 1.8; }
 /* Dark strip */
 .adoracion-strip { position: relative; min-height: 480px; overflow: hidden; display: flex; align-items: center; background: var(--dark); }
 .adoracion-strip-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: .4; }
@@ -308,7 +305,6 @@ p { line-height: 1.75; }
   .carlo-photo img { height: 380px; }
   .nosotros-photo img { height: 320px; }
   .eucaristia-grid { grid-template-columns: 1fr; }
-  .adoracion-steps { grid-template-columns: repeat(2, 1fr); }
   .adoracion-strip { min-height: 380px; }
   .adoracion-strip-text { padding: 2.5rem; }
 }
@@ -358,11 +354,8 @@ p { line-height: 1.75; }
   /* Adoración */
   .adoracion-intro { margin-bottom: 1.75rem; }
   .adoracion-intro-text { font-size: 1rem; }
-  .adoracion-steps { grid-template-columns: 1fr; gap: 0; }
-  .astep { padding: 1.1rem 0; }
-  .astep-num { font-size: 2.25rem; margin-bottom: .4rem; }
-  .astep h3 { font-size: 1.05rem; margin-bottom: .4rem; }
-  .astep p { font-size: .875rem; }
+  .adoracion-options { grid-template-columns: 1fr; }
+  .aoption p { font-size: .95rem; }
   .adoracion-strip { min-height: 300px; }
   .adoracion-strip-text { padding: 2rem 1.5rem; }
   .adoracion-strip-text blockquote { font-size: 1.05rem; }
