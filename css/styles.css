@@ -293,7 +293,7 @@ p { line-height: 1.75; }
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
 .reveal.visible { opacity: 1; transform: none; }
 
-/* ── RESPONSIVE ── */
+/* ── TABLET (900px) ── */
 @media (max-width: 900px) {
   .nav-links { display: none; }
   .nav-menu-btn { display: flex; }
@@ -305,22 +305,96 @@ p { line-height: 1.75; }
   .admin-split { grid-template-columns: 1fr; }
   .carlo-inner { grid-template-columns: 1fr; }
   .carlo-photo img { height: 380px; }
-  .nosotros-photo img { height: 380px; }
+  .nosotros-photo img { height: 320px; }
   .eucaristia-grid { grid-template-columns: 1fr; }
   .adoracion-steps { grid-template-columns: repeat(2, 1fr); }
   .adoracion-strip { grid-template-columns: 1fr; }
+  .adoracion-strip-imgs { min-height: 300px; max-height: 380px; }
   .adoracion-strip-text { border-left: none; border-top: 1px solid rgba(255,255,255,.08); padding: 2.5rem; }
 }
 
-@media (max-width: 600px) {
-  .hero-title { font-size: 2.75rem; }
-  .section-title { font-size: 2rem; }
+/* ── MOBILE (480px) ── */
+@media (max-width: 480px) {
+  :root { --nav-height: 60px; }
+
+  /* Nav */
+  .nav-logo img { height: 26px; }
+
+  /* Hero */
+  .hero-content { padding-inline: 1.25rem; }
+  .hero-title { font-size: 2.6rem; line-height: 1.04; }
+  .hero-sub { font-size: .95rem; }
+  .hero-ctas { flex-direction: column; gap: .75rem; }
+  .hero-ctas .btn { justify-content: center; }
+
+  /* Section padding */
+  .section-nosotros { padding: 3rem 0; }
+  .section-carlo { padding: 3rem 0; }
+  .section-eucaristia { padding: 3rem 0; }
+  .section-adoracion { padding: 3rem 0 0; }
+  .section-fechas { padding: 3rem 0; }
+
+  /* Nosotros */
+  .nosotros-photo img { height: 250px; }
+  .split-text p { font-size: 1rem; margin-bottom: 1rem; }
+
+  /* Eucaristía */
+  .eucaristia-statement { margin-bottom: 1.75rem; }
+  .eucaristia-headline { font-size: 2.2rem; }
+  .eucaristia-lead { font-size: 1rem; }
+  .eucaristia-grid { gap: .75rem; margin-bottom: 2rem; }
+  .ecard { padding: 1.25rem; }
+  .ecard-num { font-size: 2.5rem; margin-bottom: .5rem; }
+  .ecard h3 { font-size: 1.1rem; }
+  .ecard p { font-size: .875rem; }
+  .eucaristia-verse { padding-top: 2rem; }
+  .eucaristia-verse blockquote { font-size: 1.1rem; }
+
+  /* Carlo */
+  .carlo-photo img { height: 260px; }
+  .carlo-quote { font-size: 1.2rem; padding-left: 1rem; margin-bottom: 1.5rem; }
+  .carlo-bio p { font-size: .95rem; margin-bottom: 1rem; }
+
+  /* Adoración */
+  .adoracion-intro { margin-bottom: 1.75rem; }
+  .adoracion-intro-text { font-size: 1rem; }
+  .adoracion-steps { grid-template-columns: 1fr; gap: 0; }
+  .astep { padding: 1.1rem 0; }
+  .astep-num { font-size: 2.25rem; margin-bottom: .4rem; }
+  .astep h3 { font-size: 1.05rem; margin-bottom: .4rem; }
+  .astep p { font-size: .875rem; }
+  .adoracion-strip-imgs { min-height: 220px; max-height: 260px; }
+  .adoracion-strip-text { padding: 2rem 1.5rem; }
+  .adoracion-strip-text blockquote { font-size: 1.05rem; }
+
+  /* Fechas */
+  .section-title { font-size: 1.85rem; }
   .fechas-grid { grid-template-columns: 1fr; }
-  .footer-inner { grid-template-columns: 1fr; }
-  .hero-ctas { flex-direction: column; }
-  .hero-ctas .btn { text-align: center; justify-content: center; }
-  .modal-overlay { padding: calc(var(--nav-height) + .75rem) .75rem .75rem; }
+  .fechas-subtitle { font-size: .9rem; }
+  .fecha-day { font-size: 2.25rem; }
+
+  /* Footer */
+  .footer { padding-top: 3rem; }
+  .footer-inner { grid-template-columns: 1fr; gap: 2rem; padding-bottom: 2.5rem; }
+  .footer-quote p { font-size: 1rem; }
+  .footer-bottom .container { flex-direction: column; align-items: flex-start; gap: .5rem; }
+
+  /* Modals */
+  .modal-overlay { padding: calc(var(--nav-height) + .5rem) .5rem .5rem; }
+  .modal-header { padding: 1.25rem 1rem 1rem; }
+  .modal-title { font-size: 1.4rem; padding-right: 2rem; }
+  .modal-body { padding: 1.25rem 1rem; font-size: .95rem; line-height: 1.9; }
+
+  /* Inner pages */
+  .page-hero { padding: calc(var(--nav-height) + 2rem) 0 2rem; }
+  .page-title { font-size: 2.1rem; }
+  .page-subtitle { font-size: .95rem; }
+  .search-bar input { font-size: .9rem; }
   .songs-grid { grid-template-columns: 1fr; }
-  .admin-tabs { overflow-x: auto; }
-  .adoracion-steps { grid-template-columns: 1fr; }
+  .song-card { padding: 1.25rem; }
+  .prayer-card { padding: 1.5rem; }
+  .admin-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .admin-tab { padding: .875rem 1rem; font-size: .8rem; }
+  .filters-bar { gap: .5rem; }
+  .filter-btn { font-size: .78rem; padding: .4rem .9rem; }
 }
